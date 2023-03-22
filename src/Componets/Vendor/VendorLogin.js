@@ -14,7 +14,7 @@ function VendorLogin() {
       "http://localhost:3001/vendor/vendorLogin",
       { email }
     );
-    if (response.status === 200) {
+    if (response.data.message === 'approve') {
       Swal.fire({
         icon: "success",
         title: "Otp send Successful",
@@ -24,13 +24,10 @@ function VendorLogin() {
         confirmButtonText: "OK",
       });
       setData(response.data.data);
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong or the admin not approve you request !",
-      });
+    } else if(response.data==='pending') {
+     navigate('/vendors/PendingPage')
     }
+    
   };
   const handleLogin = async () => {
         var nu='0000'

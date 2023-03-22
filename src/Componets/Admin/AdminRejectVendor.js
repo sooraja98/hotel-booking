@@ -2,25 +2,25 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import useAdminToken from "../../CustomHooks/useAdminToken";
-function AdminVendor() {
+function AdminRejectVendor() {
   const [data, setData] = useState([]);
-  const adminTokenCheck=useAdminToken()
+const adminTokenAuth=useAdminToken()
   useEffect(() => {
     const adminToken=localStorage.getItem('adminToken')
     const fetchData = async () => {
       const response = await axios.get(
-        "http://localhost:3001/admin/vendorList",{
-          headers:{
+        "http://localhost:3001/admin/rejectvendorList",{
+          headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${adminToken}`,
-          }
+          },
         }
       );
       setData(response.data);
     };
 
     fetchData();
-  }, [adminTokenCheck]);
+  }, [adminTokenAuth]);
 
   return (
     <div>
@@ -60,16 +60,10 @@ function AdminVendor() {
                 <td className="px-6 py-4 whitespace-nowrap">
                   {data.status ? "Banned" : "Active"}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button>
-                    {" "}
-                    <span>&#x1F6AB;</span>{" "}
-                  </button>{" "}
-                </td>
                 <td className="px-6 py-4 whitespace-nowrap">      <Link
-                    to={`approveVendorsSinglePageDetails/${data._id}`}
+                    to={`rejectvendorsSinglePageDetails/${data._id}`}
                   >
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 -ml-12 rounded">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 ml-2 rounded">
                       View
                     </button>
                   </Link></td>
@@ -82,4 +76,4 @@ function AdminVendor() {
   );
 }
 
-export default AdminVendor;
+export default AdminRejectVendor;

@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2";
 import useAdminToken from "../../CustomHooks/useAdminToken";
-function AdminVendorRequestSinglePage(props) {
-  const navigate = useNavigate();
+
+function AdminSelectedVendorDetailList(props) {
+
   const id = useParams();
   const [data, setData] = useState({});
-  const adminTokenCheck = useAdminToken();
+  const adminTokenCheck=useAdminToken()
   useEffect(() => {
-    const adminToken = localStorage.getItem("adminToken");
+    const adminToken=localStorage.getItem('adminToken')
     const fetchData = async () => {
       const response = await axios.get(
         `http://localhost:3001/admin/request/singleRequestData/${JSON.stringify(
           id
-        )}`,
-        {
-          headers: {
+        )}`,{
+          headers:{
             "Content-Type": "application/json",
             Authorization: `Bearer ${adminToken}`,
-          },
+          }
         }
       );
       setData(response.data);
@@ -27,71 +26,8 @@ function AdminVendorRequestSinglePage(props) {
     fetchData();
   }, [adminTokenCheck]);
 
-  const approve = async () => {
-    const adminToken = localStorage.getItem("adminToken");
-    const id = data._id;
-    try {
-      const response = await axios.patch(
-        `http://localhost:3001/admin/request/allowing/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${adminToken}`,
-          },
-        }
-      );
-      if (response.data === "changed") {
-        Swal.fire({
-          icon: "success",
-          title: "The Request is approved",
-          text: "",
-          showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "OK",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/admin/vendorsList"); // Programmatically navigate to login page
-          }
-        });
-      }
-    } catch (error) {
-      console.log("error in the request allowing frontend side" + error);
-    }
-  };
 
-  const reject = async () => {
-    const adminToken = localStorage.getItem("adminToken");
-    const id = data._id;
-    try {
-      const response = await axios.patch(
-        `http://localhost:3001/admin/request/reject/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${adminToken}`,
-          },
-        }
-      );
-      if (response.data === "changed") {
-        Swal.fire({
-          icon: "success",
-          title: "The Request is rejected",
-          text: "",
-          showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "OK",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/admin/rejectvendorsList"); // Programmatically navigate to login page
-          }
-        });
-      }
-    } catch (error) {
-      console.log("error in the request allowing frontend side" + error);
-    }
-  };
-
-  return (
+  return (  
     <div className="relative bg-white w-full h-max overflow-hidden text-left text-lg text-gray-900 font-inter">
       <div className="flex row">
         <div className="column flex-column p-2 alig">
@@ -291,30 +227,8 @@ function AdminVendorRequestSinglePage(props) {
         </div>
       </div>
       <h1 className="text-center mt-10 text-2xl">Vendor Request </h1>
-      <div className="  flex justify-evenly mt-12 ">
-        <div className="column">
-          <button
-            onClick={approve}
-            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-600 to-green-300 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-          >
-            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white  rounded-md group-hover:bg-opacity-0 text-gray-600 font-bold">
-              APPROVE
-            </span>
-          </button>
-        </div>
-        <div className="column">
-          <button
-            onClick={reject}
-            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-600 to-red-300 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-          >
-            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white  rounded-md group-hover:bg-opacity-0 text-gray-600 font-bold">
-              REJECT
-            </span>
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
 
-export default AdminVendorRequestSinglePage;
+export default AdminSelectedVendorDetailList;

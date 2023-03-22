@@ -63,10 +63,10 @@ module.exports = {
         html: `<b>your otp is ${otp}</b>`, // html body
       };
       await transporter.sendMail(info);
-      return res.status(200).json({data:otp})
+      return res.status(200).json({data:otp,message:'approve'})
       }
-      else{
-        res.status(201)
+      else if(data===false){
+       return res.json('pending')
       }
     } catch (error) {
       console.log('the error happend in the vendor login otp section'+error) 

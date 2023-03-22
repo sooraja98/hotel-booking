@@ -15,6 +15,7 @@ function AdminLogin() {
       .post("http://localhost:3001/admin/login", { email, password })
       .then((response) => {
         if (response.status === 200) {
+          localStorage.setItem('adminToken',response.data.token)
           navigate("/admin/home");
         } else if(response.status===201) {
             Swal.fire({

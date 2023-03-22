@@ -74,8 +74,9 @@ const hotelSchema = new mongoose.Schema({
     type:Boolean,
     default:false 
   },
-  strike:{
-    type:Number,
+  reject:{
+    type:Boolean,
+    default:false
   }
 });
 

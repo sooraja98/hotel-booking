@@ -64,7 +64,7 @@ function Register() {
     const pinRegex = /^\d{6}$/;
     const gstRegex = /^GST\d{15}$/;
     const adharRegex = /^\d{12}$/;
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    const panRegex = /^[A-Za-z]{5}[0-9]{4}$/;
 
     // Validation
     if (!ownername.match(nameRegex)) {
