@@ -2,51 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function UserHeader() {
-  const headerImg = `https://www.luxuryabode.com/mona/img/hotels.jpg`;
+  const headerImg = `https://www.theparkhotels.com/images/site-specific/navi-mumbai/home/navi-mumbai-night-view.jpg`;
   return (
-    <div
-      className="h-auto md:h-80 w-full flex flex-col md:flex-row items-center justify-between px-4 md:px-8 py- md:py-6"
-      style={{
-        backgroundImage: `url(${headerImg})`,
-        backgroundSize: "fill",
-        backgroundPosition: "center",
-      }}
-    >
-      <div
-        className="absolute inset-0 bg-gray-900 opacity-50 z-10"
-        style={{ mixBlendMode: "multiply" }}
-      ></div>
-      <div className="z-20 relative"></div>
-      <div className="bg-header-button h-10 w-34 rounded-lg	 -mt-64 ml-36 md:mb-0">
-        <p className="text-bottom px-6 font-bold py-2">Search Hotels</p>
+    <div className="flex">
+      <div className=" flex w-full">
+        <div
+          className="h-auto"
+          style={{
+            height: "450px",
+            width: "100%",
+            objectfit: "cover",
+            backgroundImage: `url(${headerImg})`,
+            backgroundSize: "fill",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="flex w-28 bg-header-button p-2 content-center rounded-md ml-56 font-semibold text-center">
+            BOOK YOUR HOTEL
+          </div>
+          <div className=" flex justify-end space-x-4 -mt-10  mr-10 text-white  ">
+            <h1 className=" md:flex md:text-lg ">Home</h1>
+            <h1 className=" md:flex md:text-lg">Register/Login</h1>
+          </div>
+
+          <h1 className="flex text-2xl md:text-4xl lg:text-8xl text-white font-extralight mt-14 px-4">
+            WELCOME TO
+          </h1>
+          <h1 className="flex text-5xl md:text-7xl lg:text-8xl text-white font-thin px-2 md:px-32">
+            H O T E L S
+          </h1>
+          <h1 className="flex text-lg md:text-2xl lg:text-3xl mt-3 text-white font-thin px-2 md:px-72">
+            Don't worry about the stay
+          </h1>
+        </div>
       </div>
-      <h1 className=" text-6xl text-white">WELCOME TO HOTELS</h1>
-      <div className="flex justify-center md:justify-end  mb-60 mr-48  pt-3 ">
-        <Link
-          to="/admin/home"
-          className="mr-4 text-white font-bold hover:text-gray-200"
-        >
-          Home
-        </Link>
-        <Link
-          to="/admin/vendorsList"
-          className="mr-4 text-white hover:text-gray-200"
-        >
-          Vendor
-        </Link>
-        <Link
-          to="/admin/request"
-          className="mr-4 text-white hover:text-gray-200"
-        >
-          Request
-        </Link>
-        <Link to="/admin/complaint" className="text-white hover:text-gray-200">
-          Complaint
-        </Link>
-        <Link to="/admin/login" className="ml-4 text-white hover:text-gray-200">
-          Logout
-        </Link>
-      </div>
+  
     </div>
   );
 }

@@ -1,7 +1,10 @@
 import React from "react";
+import useAdminToken from "../../CustomHooks/useAdminToken";
+
 function Footer() {
+const adminTokenCheck =useAdminToken()
   return (
-    <footer className="bg-header-color mt-60 bottom-0 w-full  py-12">
+    <footer className="bg-header-color mt-60 bottom-0 w-full py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-1/2 lg:w-1/4 mb-8">

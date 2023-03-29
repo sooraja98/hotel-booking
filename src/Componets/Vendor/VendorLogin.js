@@ -8,39 +8,64 @@ function VendorLogin() {
   const otpRef = useRef(0);
 
   const [data, setData] = useState();
+  const [countdown, setCountdown] = useState(0);
+
   const handleOtp = async () => {
     const email = emailRef.current.value;
-    const response = await axios.post(
-      "http://localhost:3001/vendor/vendorLogin",
-      { email }
-    );
-    if (response.data.message === 'approve') {
-      Swal.fire({
-        icon: "success",
-        title: "Otp send Successful",
-        text: "successfully  otp Generated ",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK",
-      });
-      setData(response.data.data);
-    } else if(response.data==='pending') {
-     navigate('/vendors/PendingPage')
+    if (email === "") {
+      alert("enter the email please");
+    } else {
+      setCountdown(60);
+      const timerId = setInterval(() => {
+        setCountdown((countdown) => countdown - 1);
+      }, 1000);
+      setTimeout(() => clearInterval(timerId), 60000);
+      axios
+        .post("http://localhost:3001/vendor/emailVerify", { email })
+        .then((response) => {
+          if (response.data.message === "approve") {
+            Swal.fire({
+              icon: "success",
+              title: "Otp send Successful",
+              text: "successfully  otp Generated ",
+              showCancelButton: false,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "OK",
+            });
+            setData(response.data.data);
+          } else if (response.data === "pending") {
+            navigate("/vendors/PendingPage");
+          } else if (response.data === "not a user") {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...You are not a user",
+              text: "Regiser your account !",
+            });
+          }
+        });
     }
-    
   };
   const handleLogin = async () => {
-        var nu='0000'
-        console.log(data)
     const otp = otpRef.current.value;
-    if (nu===otp) {
-      navigate('/vendor/home');
-    }else{
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong  !",
+    const email = emailRef.current.value;
+    if (otp === "") {
+      alert("enter the otp plz");
+    } else {
+      const response = await axios.post("http://localhost:3001/vendor/login", {
+        otp,
+        email,
       });
+
+      if (response.data.data === "success") {
+        localStorage.setItem("vendorToken", response.data.token);
+        navigate("/vendor/home");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong  !",
+        });
+      }
     }
   };
 
@@ -69,6 +94,7 @@ function VendorLogin() {
               placeholder="Email"
               type="text"
               name="Email"
+              required
               ref={emailRef}
             />
           </label>
@@ -76,8 +102,9 @@ function VendorLogin() {
             type="button"
             onClick={handleOtp}
             className="bg-custom-button1  hover:bg-custom-inputbox-color text-white font-bold py-2 px-4 rounded relative block mt-2  ml-32"
+            disabled={countdown !== 0}
           >
-            Verify Email
+            {countdown === 0 ? " Verify Email" : `Resend: ${countdown}`}
           </button>
           <label className="relative block mt-6 content-center">
             <span className="sr-only">OTP</span>
@@ -87,8 +114,9 @@ function VendorLogin() {
             <input
               className="placeholder:italic text-white placeholder:text-slate-400 block bg-custom-inputbox-color w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm "
               placeholder="OTP"
-              type="text"
+              type="number"
               name="OTP"
+              required
               ref={otpRef}
             />
           </label>

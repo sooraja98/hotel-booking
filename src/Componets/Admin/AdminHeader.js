@@ -1,7 +1,9 @@
 import React from "react";
 import { Link,useNavigate } from "react-router-dom";
+import useAdminToken from "../../CustomHooks/useAdminToken";
 
 function Header() {
+  const adminTokenChecker=useAdminToken()
   const navigate=useNavigate()
   const headerImg = `https://images.unsplash.com/photo-1517840901100-8179e982acb7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWx8ZW58MHx8MHx8&w=1000&q=80`;
   const handleLogout=()=>{
@@ -37,7 +39,7 @@ function Header() {
         <Link to="/admin/complaint" className="text-white hover:text-gray-200">
           Complaint
         </Link>
-        <Link onClick={handleLogout} className="ml-4 text-white hover:text-gray-200">
+        <Link  onClick={handleLogout} to="/admin/login" className="ml-4 text-white hover:text-gray-200">
           Logout
         </Link>
       </div>

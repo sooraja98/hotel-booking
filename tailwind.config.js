@@ -9,6 +9,7 @@ module.exports = {
         "header-color": "#14274A",
         "header-button": "#E0B973",
         'admin-background':'#0099cc'
+      
       },
       fontSize: {
         sm: "0.8rem",

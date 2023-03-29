@@ -142,32 +142,38 @@ function Register() {
     for (let i = 0; i < hotelPic.length; i++) {
       formData.append("hotelPic", hotelPic[i]);
     }
-    try {
-      await axios.post('http://localhost:3001/vendor/register', formData).then((response) => {
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Registration Successful",
-            text: "You have successfully registered your hotel",
-            showCancelButton: false,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "OK",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              navigate("/vendor/login-register"); // Programmatically navigate to login page
+    if (hotelPic.length > 4) {
+      alert("cant not upload more than 4 pics");
+    } else {
+      try {
+        await axios
+          .post("http://localhost:3001/vendor/register", formData)
+          .then((response) => {
+            if (response.status === 200) {
+              Swal.fire({
+                icon: "success",
+                title: "Registration Successful",
+                text: "You have successfully registered your hotel",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/vendor/login-register"); // Programmatically navigate to login page
+                }
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+              });
             }
           });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
-        }
-      });
-    } catch (error) {
-      console.error(error);
-      alert(error);
+      } catch (error) {
+        console.error(error);
+        alert(error);
+      }
     }
   };
 
@@ -335,7 +341,7 @@ function Register() {
                 type="file"
                 id="hotelpic"
                 name="hotelpic"
-                multiple 
+                multiple
                 className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-1 focus:shadow-outline"
                 accept="image/*"
               />

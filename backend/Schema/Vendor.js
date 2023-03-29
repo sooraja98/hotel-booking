@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const hotelSchema = new mongoose.Schema({
+const vendorSchema = new mongoose.Schema({
   ownername: {
     type: String,
     required: true,
@@ -77,7 +77,11 @@ const hotelSchema = new mongoose.Schema({
   reject:{
     type:Boolean,
     default:false
+  },
+  otp: {
+    type: Number,
+    default: 0,
   }
 });
 
-module.exports = mongoose.model('Hotel', hotelSchema);
+module.exports = mongoose.model('vendor', vendorSchema);

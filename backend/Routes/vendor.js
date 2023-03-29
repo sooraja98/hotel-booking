@@ -55,6 +55,11 @@ router.post(
   ]),
   vendorController.vendorRegister
 );
-router.post('/vendorLogin',vendorController.vendorLogin)
+router.post('/emailVerify',vendorController.emailVerify)
+router.post('/login',vendorController.login)
+router.post('/hoteladding',vendorController.hoteladding)
+router.get('/hotelroomgetting',vendorController.hotelroomgetting)
+router.delete('/deleteroom/:hotelId/:roomId',vendorController.deleteroom)
+
 
 module.exports = router;

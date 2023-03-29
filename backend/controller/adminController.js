@@ -6,7 +6,7 @@ const NODE_MAILER_GMAIL_SECRET=process.env.NODE_MAILER_GMAIL_SECRET
 const NODE_MAILER_SENDER_ADDRESS=process.env.NODE_MAILER_SENDER_ADDRESS
 const JWT_SECRET_ADMIN=process.env.JWT_SECRET_ADMIN
 const nodemailer = require("nodemailer");
-const Hotel = require("../Schema/Vendor.js");
+const Vendor = require("../Schema/Vendor.js");
 const jwt=require('jsonwebtoken')
 module.exports = {
   login: async (req, res) => {
@@ -28,8 +28,7 @@ module.exports = {
 
   vendorRequest: async (req, res) => {
     try {
-      const vendorRequests = await Hotel.find({ allowed: 'false', reject: 'false' });
-      console.log(vendorRequests)
+      const vendorRequests = await Vendor.find({ allowed: 'false', reject: 'false' });
         res.json(vendorRequests);
     } catch (err) {
       console.error('the error happend in the vendor fetching backend'+err);
@@ -41,17 +40,18 @@ module.exports = {
       const id = req.params.id;
       const obj = JSON.parse(id);
       const value = obj['*'];
-      const requestedData = await Hotel.findOne({_id:value});
+      const requestedData = await Vendor.findOne({_id:value});
       res.json(requestedData);
     } catch (error) {
       console.log('the error is in the singleRequestdata findin in the backend side'+error)
     }
   },
   requestAllowing:async(req,res)=>{
+    console.log('requwst alliwubng')
     try {
       const id = req.params.id;
       
-      const data=await Hotel.findById(id)
+      const data=await Vendor.findById(id)
       if(data.allowed===false){
         data.allowed=true;
         await data.save()
@@ -85,7 +85,7 @@ module.exports = {
 
   vendorList:async (req, res) => {
     try {
-        const vendorRequests = await Hotel.find({ allowed: true });
+        const vendorRequests = await Vendor.find({ allowed: true });
         res.json(vendorRequests);
     } catch (err) {
       console.error('the error happend in the vendor fetching backend'+err);
@@ -94,7 +94,7 @@ module.exports = {
   },
   rejectVendorList:async (req, res) => {
     try {
-        const rejectvendorList = await Hotel.find({ reject: true });
+        const rejectvendorList = await Vendor.find({ reject: true });
         res.json(rejectvendorList);
     } catch (err) {
       console.error('the error happend in the rejectvendorList fetching backend'+err);
@@ -104,7 +104,7 @@ module.exports = {
   requestReject:async(req,res)=>{
     try {
       const id = req.params.id;
-      const data=await Hotel.findById(id)
+      const data=await Vendor.findById(id)
       if(data.reject===false){
         data.reject=true;
         await data.save()

@@ -1,10 +1,17 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 function AdminLogin() {
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const token=localStorage.getItem('adminToken')
+    if(token){
+      navigate('/admin/home')
+    }
+  })
   const emailRef = useRef();
   const passwordRef = useRef();
   const handleSubmit = (e) => {

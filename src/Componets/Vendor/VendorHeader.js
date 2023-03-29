@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { Link,useNavigate } from "react-router-dom";
+import useVendorToken from '../../CustomHooks/useVendorToken'
 function VendorHeader() {
+  const navigate=useNavigate()
+  const vendorTokenChecker=useVendorToken()
+  const handleLogout=()=>{
+    navigate("/vendor/login-register");
+   localStorage.removeItem('vendorToken')
+
+ }
+
   const headerImg = `https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGhvdGVsfGVufDB8fDB8fA%3D%3D&w=1000&q=80`;
   return (
     <div
@@ -31,7 +39,7 @@ function VendorHeader() {
         <Link  to="/vendor/paymentHistory" className="text-white px-4 hover:text-gray-200">
           Payment histroy
         </Link>
-        <Link to="/vendor/login-register" className="ml-4 text-white hover:text-gray-200">
+        <Link  onClick={handleLogout} to="/vendor/login-register" className="ml-4 text-white hover:text-gray-200">
           Logout
         </Link>
       </div>

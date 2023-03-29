@@ -19,7 +19,7 @@ const adminTokenAuth= (req,res,next)=>{
                         error:'Invalid Authorization token'
                     }).status(401)
                 }else{
-                    console.log('everything ok from the admin token check middile ware');
+                    console.log();
                    next()
                 }
              })

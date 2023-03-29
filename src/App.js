@@ -8,6 +8,7 @@ import AdminLoginP from './Pages/Admin/AdminLoginP'
 import AdminHomeP from "./Pages/Admin/AdminHomeP";
 import PendingPage from "./Pages/Vendor/PendingPage";
 import RejectPage from "./Pages/Vendor/RejectPage";
+import UserLoginP from "./Pages/User/UserLoginP";
 function App() {
   return (
     <div className="App">
@@ -19,6 +20,7 @@ function App() {
         <Route path="vendor/*" element={<VendorHomeP />} />
         <Route path="vendors/PendingPage" element={<PendingPage/>} />
         <Route path="vendors/RejectPage" element={<RejectPage/>} />
+        <Route path="user/Login" element={<UserLoginP/>} />
         <Route path="user/*" element={<UserPage />} />
       </Routes>
     </div>

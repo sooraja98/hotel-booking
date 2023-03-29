@@ -28,7 +28,6 @@ function AdminVendorRequestSinglePage(props) {
   }, [adminTokenCheck]);
 
   const approve = async () => {
-    const adminToken = localStorage.getItem("adminToken");
     const id = data._id;
     try {
       const response = await axios.patch(
@@ -36,7 +35,6 @@ function AdminVendorRequestSinglePage(props) {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${adminToken}`,
           },
         }
       );
@@ -60,15 +58,13 @@ function AdminVendorRequestSinglePage(props) {
   };
 
   const reject = async () => {
-    const adminToken = localStorage.getItem("adminToken");
     const id = data._id;
     try {
       const response = await axios.patch(
         `http://localhost:3001/admin/request/reject/${id}`,
         {
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${adminToken}`,
+            "Content-Type": "application/json"
           },
         }
       );
