@@ -156,16 +156,56 @@ module.exports = {
         const roomId = req.params.roomId
         try {
             const hotel = await Hotel.findByIdAndUpdate(hotelId, {
-              $pull: { room: { _id: roomId } }
+                $pull: {
+                    room: {
+                        _id: roomId
+                    }
+                }
             });
-            if (!hotel) {
-              return res.status(404).send('Hotel not found');
+            if (! hotel) {
+                return res.status(404).send('Hotel not found');
             }
             return res.send('Room deleted successfully');
-          } catch (err) {
+        } catch (err) {
             console.error('Error deleting room:', err);
             return res.status(500).send(err);
-          }
+        }
+    },
+    uploadimage: async (req, res) => {
+        try {
+            const email = req.body.email;
+            const decodedToken = jwt.verify(email, JWT_SECRET_VENDOR);
+            const vendorEmail = decodedToken.email;
+
+            // Find the vendor in the database
+            const vendor = await Vendor.findOne({email: vendorEmail});
+
+            if (! vendor) {
+                return res.status(400).json({message: "Vendor not found"});
+            }
+
+            // Create a new hotel document or find the existing one
+            let hotel = await Hotel.findOne({vendor: vendor._id});
+            console.log(hotel)
+            if (! hotel) {
+                hotel = new Hotel({vendor: vendor._id});
+            }
+
+            // Add the uploaded hotel images to the hotel document
+            const hotelImages = req.files.hotelImages.map((file) => file.path);
+            hotel.hotelImages = [
+                ... hotel.hotelImages,
+                ... hotelImages
+            ];
+            // Save the hotel document
+            await hotel.save();
+
+            // Return a success response
+            res.json({message: "Hotel images uploaded successfully"});
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: "Internal server error"});
+        }
     }
 
 };

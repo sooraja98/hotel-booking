@@ -1,11 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Link, useNavigate} from 'react-router-dom'
 import axios from "axios";
 import Swal from "sweetalert2";
 
 function VendorProfile() {
 
-    const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const roomTypeRef = useRef(null);
@@ -28,6 +26,32 @@ function VendorProfile() {
         };
         fetchData()
     }, [hotel])
+
+    const [hotelImages, setHotelImages] = useState([]);
+
+
+    const handleHotelPicChange = (event) => {
+        setHotelImages(event.target.files);
+    };
+
+    const hotelPicSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const email = localStorage.getItem('vendorToken');
+            const formData = new FormData();
+            for (let i = 0; i < hotelImages.length; i++) {
+                formData.append("hotelImages", hotelImages[i]);
+            }
+            console.log(formData)
+            const response = await axios.post("http://localhost:3001/vendor/uploadimage", {formData, email});
+            Swal.fire("Success", "Hotel images uploaded successfully", "success");
+        } catch (error) {
+            console.log('error happened in front end hotel pic uploading side' + error);
+            Swal.fire("Error", "Internal server error", "error");
+        }
+    }
+
+
     const handleRoomData = async (e) => {
         e.preventDefault()
         const email = localStorage.getItem('vendorToken')
@@ -69,7 +93,7 @@ function VendorProfile() {
 
         <>
 
-<div> {
+            <div> {
                 isUpdate && (
                     <div className="fixed z-10 inset-0 overflow-y-auto">
                         <div className="flex items-center justify-center min-h-screen">
@@ -104,7 +128,7 @@ function VendorProfile() {
                                     <div className="flex justify-center">
                                         <button onClick={''}
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                           Update
+                                            Update
                                         </button>
                                         <button onClick={toggleModalUpdarte}
                                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
@@ -117,12 +141,6 @@ function VendorProfile() {
                     </div>
                 )
             } </div>
-
-
-
-
-
-
 
 
             <div> {
@@ -229,12 +247,26 @@ function VendorProfile() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center">
-                        <label htmlFor="file-upload" className="relative cursor-pointer bg-gray-300 hover:bg-gray-500 rounded-md font-medium py-2 px-4">
-                            <span>Upload the picture</span>
-                            <input id="file-upload" name="file-upload" type="file" className="sr-only"/>
-                        </label>
-                    </div>
+                    <form onSubmit={hotelPicSubmit}>
+                        <div className="flex justify-center">
+                            <label className="relative cursor-pointer bg-gray-300 hover:bg-gray-500 rounded-md font-medium py-2 px-4">
+                                <span>Upload the picture</span>
+                                <input onChange={handleHotelPicChange}
+                                    required={true}
+                                    type="file"
+                                    id="hotelImages"
+                                    name="hotelImages"
+                                    multiple
+                                    className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-1 focus:shadow-outline"
+                                    accept="image/*"/>
+                            </label>
+                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-4 rounded">
+                                Add new room
+                            </button>
+                        </div>
+
+                    </form>
+
 
                 </section>
                 <div className="mt-8 bg-gray-100">
@@ -271,7 +303,8 @@ function VendorProfile() {
                                     }</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
 
-                                        <button onClick={toggleModalUpdarte} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        <button onClick={toggleModalUpdarte}
+                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Update
                                         </button>
 

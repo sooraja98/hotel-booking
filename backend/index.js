@@ -2,10 +2,10 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const cors = require("cors");
-const cookieParser=require('cookie-parser')
 const mongoose = require("mongoose");
 const vendorRoute=require('./Routes/vendor.js')
-const adminRoute=require('./Routes/admin.js')
+const adminRoute=require('./Routes/admin.js');
+const userRoute=require('./Routes/user.js')
 
 // const userRoute=require('./Routes/user.js')
 const PORT = process.env.PORT;
@@ -26,7 +26,7 @@ mongoose.connect("mongodb://localhost:27017/hotel-booking", {
 // Handle hotel registration form submission
 app.use('/vendor',vendorRoute)
 app.use('/admin',adminRoute)
-// app.use('/',userRoute)
+app.use('/user',userRoute)
 
 
 app.listen(PORT, () => {

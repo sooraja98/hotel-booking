@@ -11,7 +11,6 @@ function UserHeader() {
           style={{
             height: "450px",
             width: "100%",
-            objectfit: "cover",
             backgroundImage: `url(${headerImg})`,
             backgroundSize: "fill",
             backgroundPosition: "center",
