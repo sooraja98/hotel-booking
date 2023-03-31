@@ -13,7 +13,7 @@ function UserDashBoard() {
             <Route path='/home' element={<UserHome/>} />
             <Route path='/hotels' element={<Hotels/>} />
             <Route path='/hotels/*' element={<Hotels/>} />
-            <Route path='/hotel-single-page-view/*' element={<HotelSinglePageView/>} />
+            <Route path='/hotels/hotel-single-page-view/*' element={<HotelSinglePageView/>} />
 
           </Routes>
           <UserFooter/>
