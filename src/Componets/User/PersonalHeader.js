@@ -21,7 +21,9 @@ function PersonalHeader() {
               Logout
             </Link>
           </div>
+          
         </div>
+        
       );
 }
 

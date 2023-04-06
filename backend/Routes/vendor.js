@@ -25,7 +25,7 @@ const storage = new CloudinaryStorage({
                 break;
             case "panPic": folder = "vendor/pan";
                 break;
-            case "hotelimages": folder = "vendor/hotelimages";
+            case "hotelImages": folder = "vendor/hotelimages";
                 break;
             default: folder = "default";
         }
@@ -60,10 +60,8 @@ router.post('/login', vendorController.login)
 router.post('/hoteladding', vendorController.hoteladding)
 router.get('/hotelroomgetting', vendorController.hotelroomgetting)
 router.delete('/deleteroom/:hotelId/:roomId', vendorController.deleteroom)
-router.post('/uploadimage', upload.fields([{
-        name: "hotelimages",
-        maxCount: 9
-    }]), vendorController.uploadimage)
 
+// Update the following route to use upload.array() instead of upload.fields()
+router.post('/uploadimage', upload.fields({name:"hotelImages", maxCount:9}), vendorController.uploadimage)
 
 module.exports = router;

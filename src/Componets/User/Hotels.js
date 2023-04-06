@@ -8,6 +8,7 @@ function Hotels() {
     const location = useLocation();
     const place = new URLSearchParams(location.search).get('place');
     const [vendor, setVendor] = useState([])
+    const [hotel, setHotel] = useState([])
     useEffect(() => {
         try {
             const fetchdata = async () => {

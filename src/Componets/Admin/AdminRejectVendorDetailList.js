@@ -226,7 +226,6 @@ const adminTokenCheck= useAdminToken()
           <img className=" w-full h-64" src={data.adharPic} alt="" />
         </div>
       </div>
-      <h1 className="text-center mt-10 text-2xl">Vendor Request </h1>
     </div>
   );
 }

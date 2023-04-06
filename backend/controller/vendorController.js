@@ -30,6 +30,7 @@ module.exports = {
                 adharPic: req.files.adharPic[0].path,
                 panPic: req.files.panPic[0].path
             });
+          
             await vendor.save();
             res.status(200).json({message: "Hotel registration successful!"});
         } catch (error) {
@@ -194,8 +195,8 @@ module.exports = {
             // Add the uploaded hotel images to the hotel document
             const hotelImages = req.files.hotelImages.map((file) => file.path);
             hotel.hotelImages = [
-                ... hotel.hotelImages,
-                ... hotelImages
+                ...hotel.hotelImages,
+                ...hotelImages
             ];
             // Save the hotel document
             await hotel.save();

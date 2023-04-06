@@ -15,7 +15,7 @@ function VendorProfile() {
     const toggleModal = () => {
         setIsOpen(!isOpen);
     };
-    const toggleModalUpdarte = () => {
+    const toggleModalUpdate = () => {
         setIsUpdate(!isUpdate);
     };
     useEffect(() => {
@@ -25,7 +25,7 @@ function VendorProfile() {
             setHotel(response.data)
         };
         fetchData()
-    }, [hotel])
+    }, [])
 
     const [hotelImages, setHotelImages] = useState([]);
 
@@ -130,7 +130,7 @@ function VendorProfile() {
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Update
                                         </button>
-                                        <button onClick={toggleModalUpdarte}
+                                        <button onClick={toggleModalUpdate}
                                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
                                             Cancel
                                         </button>
@@ -261,7 +261,7 @@ function VendorProfile() {
                                     accept="image/*"/>
                             </label>
                             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-4 rounded">
-                                Add new room
+                                Add Pic
                             </button>
                         </div>
 
@@ -284,6 +284,7 @@ function VendorProfile() {
 
                         <tbody> {
                             hotel.map((hotel) => hotel.room.map((room, index) => (
+
                                 <tr className="border-b border-gray-200 bg-gray-200">
                                     <td className="px-6 py-4 whitespace-nowrap text-center">
                                         {
@@ -299,11 +300,11 @@ function VendorProfile() {
                                     }</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-center">
                                         {
-                                        room.roomprice
+                                        room.roomPrice
                                     }</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
 
-                                        <button onClick={toggleModalUpdarte}
+                                        <button onClick={toggleModalUpdate}
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Update
                                         </button>
